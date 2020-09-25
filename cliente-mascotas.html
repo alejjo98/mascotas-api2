@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <title>busqueda api</title>
+</head>
+<body>
+    <main>
+        
+        <form>
+            <input type="button" value="buscar alimento mascota" onclick="traeralimentos()"/>
+        </form>
+    </main>
+    <div id="alimento"></div>
+
+    <script>
+        const divAlimento = document.getElementById('alimento');
+    
+       
+        function traeralimentos(){
+            let objetoxhr = new XMLHttpRequest();
+
+            objetoxhr.onreadystatechange = function(){                
+                if(objetoxhr.readyState== 4 && objetoxhr.status==200){
+                 const listaAlimentosArr = JSON.parse(objetoxhr.responseText);
+
+                 for(let alimento of listaAlimentosArr){
+                     const divAlimento2 = document.createElement('div');
+                     divAlimento2.innerHTML =alimento.nombre_alimento ;
+                     divAlimento.appendChild(divAlimento2);
+               }
+                }
+
+            
+            if(objetoxhr.readyState <=3){
+                alert('cargando');
+            
+        
+            }
+
+
+
+
+
+                };
+            
+            objetoxhr.open('GET','mascotas-api.php');
+
+            objetoxhr.send();
+
+
+        }
+    </script>
+</body>
+</html>
